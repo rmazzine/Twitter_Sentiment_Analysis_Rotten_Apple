@@ -1,0 +1,12 @@
+werkzeug==0.14.1
+flask
+flask_restful
+dash
+dash_core_components
+dash_html_components
+pandas
+tweepy
+numpy
+wordcloud
+xlrd
+matplotlib
