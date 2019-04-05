@@ -13,6 +13,8 @@ This repository has a python DASH dashboard application for a real time Twitter 
 	 - It has the tweet classification algorithm that I called rotten apple. Bellow I explain more the logic behind this algorithm, but it has only one main function, evaluate_tweet, that evaluate a tweet based on a DataFrame with words and its polarity score.
  - TwitterWordcloudGen.py
 	 - This file only has one function that generates a wordcloud image using the [WordCloud package](https://github.com/amueller/word_cloud). It transforms the image to a Base64 file that will be exhibited on the dashboard.
+ - benchmark.py
+	 - This file loads the testing data, manually classified (test_set_twitter_sentiment.xlsx), and uses the classification algorithm to classify as positive or negative. As output the code gives the accuracy score of the system.
 
 On the preprocessing folder, we have other files that were used to gather tweets and to create the polarity DataFrame.
 
@@ -43,16 +45,8 @@ Finally, I want to highlight this algorithm could be improved with mathematical 
 
 ## Accuracy report
 -   What metric are you using? Why ?
-		- To check the algorithm performance, 100 random tweets were manually classified as more positive or more negative. As Twitter has a negative bias, I used F1 score as metric.
+		- To check the algorithm performance, 102 random tweets were manually classified as more positive (53) or more negative [49]. The metric used (as we have a very similar quantity of negative and positive tweets) was the accuracy: (correct_classifications)/(total_tweets).
 -   Which type of test did you choose ?
-	- I did a "benchmark" test, where I ran my algorithm to classify the testing data.
+	- I did a "benchmark" test, where I ran my algorithm to classify the testing data. I used the scikit-learn function accuracy_score to get the accuracy.
 -   Include the test dataset.
-	- It is on preprocessing folder.
-
-## Generating the classification score
-
-To classify a tweet, each tweet word/emoji/expression separated by a space is analysed and assigned a score. The tweet score is the sum of all characters positive scores minus the negative score of all them. To classify a tweet as positive, I defined a threshold of tweet_total_score>=0.1, a negative tweet has the threshold of <=-0.2.  
-
-## Neutral and Mixed classifications
-
-Tweets that have a score higher than -0.2 and lower than 0.1 can be of two types. If all words used in the phrase are not highly polar (so, they are commonly used in positive or negative phrases) the tweet will have a low word variance, so I suppose these tweets could be classified as neutral, therefore we defined a threshold of variance<0.25. If the tweet use both polar negative and negative words, this can lead a low tweet polarity score but a high variance, for those tweets, with a variance threshold >= 0.25 we defined as mixed. 
+	- It is on the main folder (test_set_twitter_sentiment.xlsx).
