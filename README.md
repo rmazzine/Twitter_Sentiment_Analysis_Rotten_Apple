@@ -6,13 +6,13 @@ This repository has a python DASH dashboard application for a real time Twitter 
 # Files
 
  - dashboardApp.py
-	 - This is the main application file. It uses the python DASH dashboard library with Flask to create a iterative dashboard that show tweets and statistics. 
+	 - This is the main application file. It uses the python [DASH dashboard library](https://plot.ly/products/dash/) with [Flask](http://flask.pocoo.org/) to create a iterative dashboard that show tweets and statistics. 
  - AnalyseRTTwitter.py
-	 - This file uses the Tweepy library to get tweets. There are two main functions: get_twitter_buffer - it gets 10 last tweets with a specific query and tweet_analysis that process the tweet using the classification algorithm on TwitterAnalyser file and return a list with tweet data and scores.
+	 - This file uses the [Tweepy](http://www.tweepy.org/) library to get tweets. There are two main functions: get_twitter_buffer - it gets 10 last tweets with a specific query and tweet_analysis that process the tweet using the classification algorithm on TwitterAnalyser file and return a list with tweet data and scores.
  - TwitterAnalyser.py
 	 - It has the tweet classification algorithm that I called rotten apple. Bellow I explain more the logic behind this algorithm, but it has only one main function, evaluate_tweet, that evaluate a tweet based on a DataFrame with words and its polarity score.
  - TwitterWordcloudGen.py
-	 - This file only has one function that generates a wordcloud image using the WordCloud package. It transforms the image to a Base64 file that will be exhibited on the dashboard.
+	 - This file only has one function that generates a wordcloud image using the [WordCloud package](https://github.com/amueller/word_cloud). It transforms the image to a Base64 file that will be exhibited on the dashboard.
 
 On the preprocessing folder, we have other files that were used to gather tweets and to create the polarity DataFrame.
 
@@ -33,7 +33,7 @@ One of the biggest challenges when building building an emotion classifier in an
 
 A additional problem when building these type of classifier for Portuguese is the lack of packages,training/testing data in Portuguese (~~ironic to say that in English ¯\_(ツ)_/¯~~). Most of classifiers found on Git-Hub were based on English classification libraries associated with translation packages, this obviously can lead to many errors (not only because misspelled words that will be hardly correctly translated, but there are many words and expressions (like emojis) [that can have a different meaning in different cultures/locales](https://www.daytranslations.com/blog/2018/02/how-emojis-are-perceived-differently-by-different-cultures-10690/).
 
-Therefore, having all these problems in mind I build an algorithm called Rotten Apple. The name is related to a very famous proverb - ***A rotten apple spoils the barrel*** -. In my algorithm the rotten apples were pre-defined negative or positive words (like lindo:positive / péssimo:negative). These words (apples) were used to "spoil" other words that were not classified. Therefore, in my logic, when a word is constantly associated with a bad word, it may be a bad word too. If the word is neutral (like very/muito(a)) it may have a similar positive and negative score.
+Therefore, having all these problems in mind I build an algorithm called Rotten Apple. The name is related to a very famous proverb - ***A rotten apple spoils the barrel*** -. In my algorithm the rotten apples were [pre-defined negative or positive words](https://www.ppgia.pucpr.br/~paraiso/mineracaodeemocoes/recursos/barbara_martinazzo_versaofinal.pdf) (like lindo:positive / péssimo:negative) and [emojis](https://www.clarin.si/repository/xmlui/handle/11356/1048). These words (apples) were used to "spoil" other words that were not classified. Therefore, in my logic, when a word is constantly associated with a bad word, it may be a bad word too. If the word is neutral (like very/muito(a)) it may have a similar positive and negative score.
 
 This makes this algorithm highly flexible to classify new words/expressions and the possibility to train in real time (as new classified tweets can assign updated scores to the words). This algorithm **do not** depends of training data, it is an unsupervised classification that only uses positive/negative words to create the initial word dataset.
 
