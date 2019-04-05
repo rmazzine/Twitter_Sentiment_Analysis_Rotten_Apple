@@ -22,9 +22,6 @@ server.secret_key = os.environ.get('secret_key', 'secret')
 # Clean up wordcloud file
 open('1000tweets.txt','w',encoding='utf8').write('')
 
-# CSS
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-
 # Variables
 txt_h1='test'
 df_stored_scores = pd.DataFrame({'id':[],'tweet':[],'positive_score':[],'negative_score':[],'total_score':[],'var':[]})
@@ -39,9 +36,10 @@ tweet_txt_style = {'color': 'black', 'fontSize': 20,'font-weight':'bold','opacit
 
 
 # DASH - Layout
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__,static_folder='assets')
 
 app.layout = html.Div([
+    html.Link(href='/assets/main.css', rel='stylesheet'),
     html.Div([
     html.H1(id='topperson',children='Twitter Sentiment Analysis - Made by: Raphael Mazzine',style={'text-align':'center'}),
     html.Label('Input Query - PRESS SEARCH'),
@@ -299,4 +297,4 @@ def update_image_src(value):
 
 
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0',debug=False,port=8060)
+    app.run_server(host='localhost',debug=False,port=8060)
